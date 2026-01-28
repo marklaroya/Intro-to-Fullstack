@@ -5,7 +5,7 @@
   "license": "ISC",
   "author": "Mark Lester Laroya",
   "bugs": {
-    "url": "https://github.com/marklaroya/basic-backend.git"
+    "url": "https://github.com/marklaroya/Intro-to-backend.git"
   },
   "type": "module",
   "main": "backend/src/index.js",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/marklaroya/basic-backend.git"
+    "url": "https://github.com/marklaroya/Intro-to-backend.git"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
