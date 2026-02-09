@@ -27,7 +27,7 @@ export default function loginPage() {
     <StyledWrapper>
       <div className="form-box">
         <form className="form" onSubmit={handleSubmit}>
-          <span className="title">Log in</span>
+          <span className="title">Welcome!</span>
           <span className="subtitle">Sign in to your account.</span>
 
           <div className="form-container">
