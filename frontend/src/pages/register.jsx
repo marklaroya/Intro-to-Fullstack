@@ -1,55 +1,79 @@
-import { Link } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 import { useState } from "react";
+import { StyledWrapper } from "../components/StyledWrapper";
+
 
 export default function RegisterPage(){
-    const [name,setName] = useState('');
-    const [email,setEmail] = useState('');
-    const [password,setPassword] = useState('');
-    function registerUser(ev){
+
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    
+
+    
+    function handleSubmit(ev){
         ev.preventDefault();
-        axios.post('http://localhost:5173/register',{
-            name,
+
+    axios.post('/api/v1/users/register',{ // to the backend route for registration
+            username,
             email,
             password
+        }) .then(response => {
+            alert('Registration successful. Please log in.');
+        }) .catch(error => {
+            alert('Registration failed. Please try again.');
         });
     }
 
+
     return (
-        <div className="mt-4 grow flex items-center justify-around">
-            <div className="mb-32">
-                <h1 className="text-4xl py-4 text-center mb-4" >Register</h1>
-                <form className="max-w-md mx-auto" onSubmit={registerUser}>
-                    <input  type="text" placeholder="your name" 
-                            value={name} onChange={
-                            ev =>setName(ev.target.value)}>
+    <StyledWrapper>
+      <div className="form-box">
+        <form className="form" onSubmit={handleSubmit}>
+          <span className="title">Sign up</span>
+          <span className="subtitle">Create a free account with your email.</span>
 
-                    </input>
-                    
-                    <input  type='email'placeholder="your@email.com" 
-                            value={email} onChange = {
-                            ev =>setEmail(ev.target.value)}>
+          <div className="form-container">
+            <input
+              type="text"
+              className="input"
+              placeholder="Full Name"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
 
-                    </input>
+            <input
+              type="email"
+              className="input"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
 
-                    <input  type='password' placeholder="password"
-                            value={password} onChange= {
-                            ev=>setPassword(ev.target.value)}>
+            <input
+              type="password"
+              className="input"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              minLength={8}
+              required
+            />
+          </div>
 
-                    </input>
-                    
-                    <button className="primary">Register</button>
+          <button type="submit">Sign up</button>
+        </form>
 
-                    <div className="text-center p-3 text-gray-500">
-                        Already have an account?
-                        <Link className="underline text-black"
-                        to={"/login"}>login</Link>
-                    
-                    
-                    </div>
-
-                </form>
-            </div>
+        <div className="form-section">
+          <p>
+            Have an account? <a href="/login">Log in</a>
+          </p>
         </div>
+      </div>
+    </StyledWrapper>
     );
 }
+
+

@@ -14,6 +14,8 @@ const userSchema = new Schema(
     },
 
     password: {
+      // hashed password
+      // the type: String will store both plain + number types as strings
       type: String,
       required: true,
       minLength: 8,

@@ -21,7 +21,6 @@ const registerUser = async (req, res) => {
             username,
             email: email.toLowerCase(),
             password,
-            loggedIn: false,
         });
 
         res.status(201).json({
@@ -33,6 +32,7 @@ const registerUser = async (req, res) => {
         res.status(500).json({message: "Internal Server error", error: error.message});
     }
 };
+
 const loginUser = async (req, res) => {
     try{
 
