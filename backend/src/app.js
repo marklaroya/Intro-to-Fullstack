@@ -3,6 +3,7 @@ import cors from "cors";
 
 const app = express();
 
+// para ma connect ang frontend at backend, kailangan natin i-set up ang CORS (Cross-Origin Resource Sharing) options
 const corsOptions = {
   // you can change this to your frontend's URL in production
   // example: http://myfrontend.com if deployed or http://localhost:3000 if running locally
@@ -13,12 +14,12 @@ const corsOptions = {
   preflightContinue: false,
   optionsSuccessStatus: 204,
 };
+// test log to check if cors options are correct
 console.log("CORS Options", corsOptions);
 
 // middlewares
 app.use(express.json());
 app.use(cors(corsOptions));
-app.use(express.urlencoded({ extended: true }));
 
 // routes to be imported
 

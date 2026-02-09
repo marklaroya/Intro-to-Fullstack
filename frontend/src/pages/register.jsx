@@ -1,37 +1,47 @@
 import axios from "axios";
-import { useState } from "react";
+import { use, useState } from "react";
 import { StyledWrapper } from "../components/StyledWrapper";
 
+export default function RegisterPage() {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-export default function RegisterPage(){
+  function handleSubmit(ev) {
+    ev.preventDefault();
 
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    
+    axios
+      .post("/api/v1/users/register", {
+        // to the backend route for registration
+        username,
+        email,
+        password,
+      })
+      .then((response) => {
+        alert("Registration successful. Please log in.");
+        setUsername("");
+        setEmail("");
+        setPassword("");
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          alert(
+            "This email is already registered. Please use a different email.",
+          );
+        } else {
+          alert("Registration failed. Please try again.");
+        }
+      });
+  }
 
-    
-    function handleSubmit(ev){
-        ev.preventDefault();
-
-    axios.post('/api/v1/users/register',{ // to the backend route for registration
-            username,
-            email,
-            password
-        }) .then(response => {
-            alert('Registration successful. Please log in.');
-        }) .catch(error => {
-            alert('Registration failed. Please try again.');
-        });
-    }
-
-
-    return (
+  return (
     <StyledWrapper>
       <div className="form-box">
         <form className="form" onSubmit={handleSubmit}>
           <span className="title">Sign up</span>
-          <span className="subtitle">Create a free account with your email.</span>
+          <span className="subtitle">
+            Create a free account with your email.
+          </span>
 
           <div className="form-container">
             <input
@@ -63,7 +73,9 @@ export default function RegisterPage(){
             />
           </div>
 
-          <button type="submit">Sign up</button>
+          <button type="submit" className="button">
+            Sign up
+          </button>
         </form>
 
         <div className="form-section">
@@ -73,7 +85,5 @@ export default function RegisterPage(){
         </div>
       </div>
     </StyledWrapper>
-    );
+  );
 }
-
-

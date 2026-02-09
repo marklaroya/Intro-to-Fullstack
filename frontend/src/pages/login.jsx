@@ -2,29 +2,28 @@ import axios from "axios";
 import { useState } from "react";
 import { StyledWrapper } from "../components/StyledWrapper";
 
+export default function loginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-export default function loginPage(){ 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    
+  function handleSubmit(ev) {
+    ev.preventDefault();
 
-    
-    function handleSubmit(ev){
-        ev.preventDefault();
+    axios
+      .post("/api/v1/users/login", {
+        // to the backend route for login
+        email,
+        password,
+      })
+      .then((response) => {
+        alert("Login successful.");
+      })
+      .catch((error) => {
+        alert("Login failed. Please try again.");
+      });
+  }
 
-    axios.post('/api/v1/users/login',{ // to the backend route for login
-            email,
-            password
-        }) .then(response => {
-            alert('Login successful.');
-
-        }) .catch(error => {
-            alert('Login failed. Please try again.');
-        });
-    }
-
-
-    return (
+  return (
     <StyledWrapper>
       <div className="form-box">
         <form className="form" onSubmit={handleSubmit}>
@@ -32,7 +31,6 @@ export default function loginPage(){
           <span className="subtitle">Sign in to your account.</span>
 
           <div className="form-container">
-
             <input
               type="email"
               className="input"
@@ -63,7 +61,5 @@ export default function loginPage(){
         </div>
       </div>
     </StyledWrapper>
-    );
+  );
 }
-
-
