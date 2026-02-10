@@ -56,6 +56,7 @@ backend/
    │
    └─ index.js
 
+--- 
 
 ## 📁 Project Structure (Frontend)
 
@@ -115,7 +116,7 @@ LogIn
 ![alt text](image-1.png)
 
 Register
-![alt text](image-2.png)
+![alt text](image-3.png)
 
 DashBoard
 ![alt text](image.png)
