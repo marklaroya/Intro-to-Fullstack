@@ -3,12 +3,14 @@ import cors from "cors";
 
 const app = express();
 
+const allowedOrigins = ["http://localhost:3000", "http://localhost:5173"]; // you can add more allowed origins here
+
 // para ma connect ang frontend at backend, kailangan natin i-set up ang CORS (Cross-Origin Resource Sharing) options
 const corsOptions = {
   // you can change this to your frontend's URL in production
   // example: http://myfrontend.com if deployed or http://localhost:3000 if running locally
   // for production, you should set this to the actual domain of your frontend application
-  origin: "http://localhost:3000",
+  origin: allowedOrigins,
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,

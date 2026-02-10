@@ -1,27 +1,27 @@
-import axios from "axios";
-import { use, useState } from "react";
+import { useState } from "react";
 import { StyledWrapper } from "../components/StyledWrapper";
+import { registerUser } from "../api/userApi"; // to API folder
+import { useNavigate } from 'react-router-dom';
 
-export default function RegisterPage() {
+export function RegisterPage() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSubmit(ev) {
+  const nagivate = useNavigate();
+
+  async function handleSubmit(ev) {
     ev.preventDefault();
 
-    axios
-      .post("/api/v1/users/register", {
-        // to the backend route for registration
-        username,
-        email,
-        password,
-      })
+    // call the registerUser API function
+    registerUser(username, email, password)
       .then((response) => {
         alert("Registration successful. Please log in.");
+
         setUsername("");
         setEmail("");
         setPassword("");
+        nagivate("/login");
       })
       .catch((error) => {
         if (error.response && error.response.status === 400) {
@@ -72,7 +72,7 @@ export default function RegisterPage() {
               required
             />
           </div>
-
+        
           <button type="submit" className="button">
             Sign up
           </button>
@@ -87,3 +87,6 @@ export default function RegisterPage() {
     </StyledWrapper>
   );
 }
+
+
+export default RegisterPage;

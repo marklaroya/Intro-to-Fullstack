@@ -1,32 +1,33 @@
-import axios from "axios";
 import { useState } from "react";
-import { StyledWrapper } from "../components/StyledWrapper";
+import { StyledWrapper } from "../components/StyledWrapper.jsx";
+import { loginUser } from "../api/userApi.js";
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../context/AuthContext.jsx"; // to get the user state from AuthContext
 
-export default function loginPage() {
+export function loginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSubmit(ev) {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  async function handleLogin(ev) {
     ev.preventDefault();
 
-    axios
-      .post("/api/v1/users/login", {
-        // to the backend route for login
-        email,
-        password,
-      })
-      .then((response) => {
-        alert("Login successful.");
-      })
-      .catch((error) => {
-        alert("Login failed. Please try again.");
-      });
+     try {
+      const response = await loginUser(email, password);
+
+      login(response.data.user);
+      navigate("/dashboard");
+    } catch (error) {
+      alert("Login failed. Please try again.");
+    }
   }
 
   return (
     <StyledWrapper>
       <div className="form-box">
-        <form className="form" onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleLogin}>
           <span className="title">Welcome!</span>
           <span className="subtitle">Sign in to your account.</span>
 
@@ -63,3 +64,5 @@ export default function loginPage() {
     </StyledWrapper>
   );
 }
+
+export default loginPage;
