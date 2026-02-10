@@ -35,42 +35,54 @@ This project was created as a learning exercise to understand how frontend and b
 
 ---
 ## 📁 Project Structure (Backend)
-src/
-├─ config/                   
-│  ├─ constants.js
-│  └─ database.js
-├─ controller/               
-│  ├─ post.controller.js
-│  └─ user.controller.js
-├─ models/                  
-│  ├─ post.controller.js
-│  └─ user.model.js
-├─ routes/                  
-│  └─ post.route.js
-│  └─ post.route.js
-├─ App.jsx
-└─ index.jsx
----
+
+backend/
+└─ src/
+   ├─ config/
+   │  ├─ constants.js
+   │  └─ database.js
+   │
+   ├─ controllers/
+   │  ├─ user.controller.js
+   │  └─ post.controller.js
+   │
+   ├─ models/
+   │  ├─ user.model.js
+   │  └─ post.model.js
+   │
+   ├─ routes/
+   │  ├─ user.route.js
+   │  └─ post.route.js
+   │
+   └─ index.js
+
 
 ## 📁 Project Structure (Frontend)
 
-src/
-├─ api/                # API calls (Axios)
-│  ├─ postApi.js
-│  └─ userApi.js
-├─ Auth/               # Authentication pages
-│  ├─ Login.jsx
-│  └─ Register.jsx
-├─ components/         # Reusable components
-│  ├─ Navbar.jsx
-│  ├─ ProtectedRoute.jsx
-│  └─ StyledWrapper.jsx
-├─ context/            # Global state (Auth)
-│  └─ AuthContext.jsx
-├─ pages/              # Main pages
-│  └─ Dashboard.jsx
-├─ App.jsx
-└─ main.jsx
+frontend/
+└─ src/
+   ├─ api/                  # Axios API calls
+   │  ├─ postApi.js
+   │  └─ userApi.js
+   │
+   ├─ Auth/                 # Authentication pages
+   │  ├─ Login.jsx
+   │  └─ Register.jsx
+   │
+   ├─ components/           # Reusable components
+   │  ├─ Navbar.jsx
+   │  ├─ ProtectedRoute.jsx
+   │  └─ StyledWrapper.jsx
+   │
+   ├─ context/              # Global state (Auth)
+   │  └─ AuthContext.jsx
+   │
+   ├─ pages/                # Main pages
+   │  └─ Dashboard.jsx
+   │
+   ├─ App.jsx
+   └─ main.jsx
+
 ---
 
 📌 API Endpoints (Backend)
