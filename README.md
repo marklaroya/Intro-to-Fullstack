@@ -34,7 +34,6 @@ This project was created as a learning exercise to understand how frontend and b
 - Mongoose
 
 ---
-
 ## 📁 Project Structure (Backend)
 src/
 ├─ config/                   
@@ -51,7 +50,6 @@ src/
 │  └─ post.route.js
 ├─ App.jsx
 └─ index.jsx
-
 ---
 
 ## 📁 Project Structure (Frontend)
@@ -73,34 +71,29 @@ src/
 │  └─ Dashboard.jsx
 ├─ App.jsx
 └─ main.jsx
-
 ---
 
 📌 API Endpoints (Backend)
 Auth
-POST /api/v1/users/register
-POST /api/v1/users/login
-POST /api/v1/users/logout
+- POST /api/v1/users/register
+- POST /api/v1/users/login
+- POST /api/v1/users/logout
 
 Posts
-POST /api/v1/posts/create
-GET /api/v1/posts/getPosts
-PATCH /api/v1/posts/update/:id
-DELETE /api/v1/posts/delete/:id
+- POST /api/v1/posts/create
+- GET /api/v1/posts/getPosts
+- PATCH /api/v1/posts/update/:id
+- DELETE /api/v1/posts/delete/:id
 
 ---
 
 🧠 What I Learned
 
-How React Context works for authentication
-
-How protected routes work using React Router
-
-How to connect frontend and backend using Axios
-
-How REST APIs handle CRUD operations
-
-Debugging common frontend/backend issues (CORS, routes, HTTP methods)
+- How React Context works for authentication
+- How protected routes work using React Router
+- How to connect frontend and backend using Axios
+- How REST APIs handle CRUD operations
+- Debugging common frontend/backend issues (CORS, routes, HTTP methods)
 
 ---
 
