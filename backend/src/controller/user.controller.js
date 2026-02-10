@@ -1,5 +1,6 @@
 import { User } from "../models/user.model.js";
 
+// this controller acts as a bridge between the routes and the database models, handling the logic for user registration, login, and logout.
 const registerUser = async (req, res) => {
     try{
         const {username, email, password} = req.body;

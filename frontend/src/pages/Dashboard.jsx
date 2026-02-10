@@ -2,218 +2,129 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 
+import { getPosts, createPost, updatePost, deletePost } from "../api/postApi.js";
 import { logoutUser } from "../api/userApi.js";
-import { createPost, getPosts, updatePost, deletePost } from "../api/postApi.js";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  // UI states
   const [posts, setPosts] = useState([]);
-  const [loadingPosts, setLoadingPosts] = useState(true);
-  const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  // Form states
-  const [form, setForm] = useState({ name: "", description: "", age: "" });
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [age, setAge] = useState("");
   const [editingId, setEditingId] = useState(null);
-
-  const loadPosts = async () => {
-    setLoadingPosts(true);
-    setError("");
-    try {
-      const res = await getPosts();
-      setPosts(res.data?.posts ?? []);
-    } catch (e) {
-      setError(e?.response?.data?.message || "Failed to load posts. Check backend/CORS/URL.");
-    } finally {
-      setLoadingPosts(false);
-    }
-  };
 
   useEffect(() => {
     loadPosts();
   }, []);
 
-  const onChange = (e) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const resetForm = () => {
-    setForm({ name: "", description: "", age: "" });
-    setEditingId(null);
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    setSaving(true);
-    setError("");
-
-    
+  async function loadPosts() {
     try {
-      const payload = {
-        name: form.name.trim(),
-        description: form.description.trim(),
-        age: Number(form.age),
-      };
-
-      if (!payload.name || !payload.description || Number.isNaN(payload.age)) {
-        setError("Please fill out all fields correctly.");
-        return;
-      }
-
-      if (editingId) {
-        await updatePost(editingId, payload);
-      } else {
-        await createPost(form.name, form.description, form.age);
-      }
-
-      resetForm();
-      await loadPosts();
-    } catch (e) {
-      setError(e?.response?.data?.message || "Failed to save post.");
-    } finally {
-      setSaving(false);
+      const res = await getPosts();
+      setPosts(res.data.posts);
+    } catch {
+      setError("Failed to load posts");
     }
-  };
+  }
 
-  const startEdit = (post) => {
-    setEditingId(post._id);
-    setForm({
-      name: post.name ?? "",
-      description: post.description ?? "",
-      age: post.age ?? "",
-    });
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const onDelete = async (id) => {
-    const ok = confirm("Delete this post?");
-    if (!ok) return;
-
+  async function handleSubmit(e) {
+    e.preventDefault();
     setError("");
+
+    try {
+      if (editingId) {
+        await updatePost(editingId, {
+          name,
+          description,
+          age: Number(age),
+        });
+      } else {
+        await createPost(name, description, Number(age));
+      }
+
+      setName("");
+      setDescription("");
+      setAge("");
+      setEditingId(null);
+      loadPosts();
+    } catch {
+      setError("Failed to save post");
+    }
+  }
+
+  function handleEdit(post) {
+    setEditingId(post._id);
+    setName(post.name);
+    setDescription(post.description);
+    setAge(post.age);
+  }
+
+  async function handleDelete(id) {
     try {
       await deletePost(id);
-      await loadPosts();
-    } catch (e) {
-      setError(e?.response?.data?.message || "Failed to delete post.");
+      loadPosts();
+    } catch {
+      setError("Failed to delete post");
     }
-  };
+  }
 
-  const handleLogout = async () => {
+  async function handleLogout() {
     try {
       await logoutUser(user?.email);
-    } catch {
-      // even if backend logout fails, we logout locally
-    }
+    } catch {}
     logout();
     navigate("/login");
-  };
+  }
 
   return (
-    <div style={{ padding: 20, maxWidth: 900, margin: "0 auto" }}>
-      <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div>
-          <h1 style={{ margin: 0 }}>Dashboard</h1>
-          <p style={{ marginTop: 6 }}>Welcome, <b>{user?.username || user?.email}</b></p>
-        </div>
-        <button onClick={handleLogout}>Logout</button>
-      </header>
+    <div style={{ padding: 20 }}>
+      <h1>Dashboard</h1>
+      <p>Welcome, {user?.username || user?.email}</p>
+      <button onClick={handleLogout}>Logout</button>
 
       <hr />
 
-      {/* Status */}
-      {error && (
-        <div style={{ background: "#ffe5e5", padding: 10, borderRadius: 8, marginBottom: 12 }}>
-          <b>Error:</b> {error}
-        </div>
-      )}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-      {/* Form */}
-      <section style={{ marginBottom: 16 }}>
-        <h2 style={{ marginBottom: 8 }}>{editingId ? "Edit Post" : "Create Post"}</h2>
+      <h2>{editingId ? "Edit Post" : "Create Post"}</h2>
 
-        <form onSubmit={onSubmit} style={{ display: "grid", gap: 10 }}>
-          <input
-            name="name"
-            placeholder="Name"
-            value={form.name}
-            onChange={onChange}
-            required
-          />
-          <input
-            name="description"
-            placeholder="Description"
-            value={form.description}
-            onChange={onChange}
-            required
-          />
-          <input
-            name="age"
-            type="number"
-            placeholder="Age"
-            value={form.age}
-            onChange={onChange}
-            required
-          />
+      <form onSubmit={handleSubmit}>
+        <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
+        <br />
+        <input
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Description"
+        />
+        <br />
+        <input value={age} onChange={(e) => setAge(e.target.value)} placeholder="Age" />
+        <br />
 
-          <div style={{ display: "flex", gap: 10 }}>
-            <button type="submit" disabled={saving}>
-              {saving ? "Saving..." : editingId ? "Update" : "Create"}
-            </button>
-
-            {editingId && (
-              <button type="button" onClick={resetForm} disabled={saving}>
-                Cancel
-              </button>
-            )}
-          </div>
-        </form>
-      </section>
-
-      <hr />
-
-      {/* Posts */}
-      <section>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <h2 style={{ marginBottom: 8 }}>Posts</h2>
-          <button onClick={loadPosts} disabled={loadingPosts}>
-            {loadingPosts ? "Refreshing..." : "Refresh"}
+        <button type="submit">{editingId ? "Update" : "Create"}</button>
+        {editingId && (
+          <button type="button" onClick={() => setEditingId(null)}>
+            Cancel
           </button>
-        </div>
-
-        {loadingPosts ? (
-          <p>Loading posts...</p>
-        ) : posts.length === 0 ? (
-          <p>No posts yet.</p>
-        ) : (
-          posts.map((p) => (
-            <div
-              key={p._id}
-              style={{
-                border: "1px solid #ddd",
-                padding: 12,
-                borderRadius: 10,
-                marginBottom: 10,
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between", gap: 10 }}>
-                <div>
-                  <div style={{ fontWeight: 700 }}>{p.name}</div>
-                  <div>{p.description}</div>
-                  <small>Age: {p.age}</small>
-                </div>
-
-                <div style={{ display: "flex", gap: 8, alignItems: "start" }}>
-                  <button onClick={() => startEdit(p)}>Edit</button>
-                  <button onClick={() => onDelete(p._id)}>Delete</button>
-                </div>
-              </div>
-            </div>
-          ))
         )}
-      </section>
+      </form>
+
+      <hr />
+
+      <h2>Posts</h2>
+
+      {posts.map((post) => (
+        <div key={post._id} style={{ border: "1px solid #ccc", padding: 10 }}>
+          <b>{post.name}</b>
+          <p>{post.description}</p>
+          <p>Age: {post.age}</p>
+
+          <button onClick={() => handleEdit(post)}>Edit</button>
+          <button onClick={() => handleDelete(post._id)}>Delete</button>
+        </div>
+      ))}
     </div>
   );
 }
