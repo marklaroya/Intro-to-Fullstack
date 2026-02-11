@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
-
-import { getPosts, createPost, updatePost, deletePost } from "../api/postApi.js";
+import {
+  getPosts,
+  createPost,
+  updatePost,
+  deletePost,
+} from "../api/postApi.js";
 import { logoutUser } from "../api/userApi.js";
+import { StyledWrapper } from "../components/StyledWrapper.jsx";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
@@ -80,51 +85,85 @@ export default function Dashboard() {
   }
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Dashboard</h1>
-      <p>Welcome, {user?.username || user?.email}</p>
-      <button onClick={handleLogout}>Logout</button>
+    <StyledWrapper>
+      <div className="dashboard">
+        <div className="dash-header">
+          <div>
+            <div className="dash-title">DASHBOARD</div>
+            <div style={{ color: "rgba(255,255,255,0.6)" }}>
+              Welcome, {user?.username || user?.email}
+            </div>
+          </div>
 
-      <hr />
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <h2>{editingId ? "Edit Post" : "Create Post"}</h2>
-
-      <form onSubmit={handleSubmit}>
-        <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
-        <br />
-        <input
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description"
-        />
-        <br />
-        <input value={age} onChange={(e) => setAge(e.target.value)} placeholder="Age" />
-        <br />
-
-        <button type="submit">{editingId ? "Update" : "Create"}</button>
-        {editingId && (
-          <button type="button" onClick={() => setEditingId(null)}>
-            Cancel
+          <button className="small-btn" onClick={handleLogout}>
+            LOGOUT
           </button>
-        )}
-      </form>
-
-      <hr />
-
-      <h2>Posts</h2>
-
-      {posts.map((post) => (
-        <div key={post._id} style={{ border: "1px solid #ccc", padding: 10 }}>
-          <b>{post.name}</b>
-          <p>{post.description}</p>
-          <p>Age: {post.age}</p>
-
-          <button onClick={() => handleEdit(post)}>Edit</button>
-          <button onClick={() => handleDelete(post._id)}>Delete</button>
         </div>
-      ))}
-    </div>
+
+        <div className="dash-grid">
+          {/* LEFT */}
+          <div className="tile tile-pad">
+            <div className="section-title">
+              {editingId ? "EDIT POST" : "CREATE POST"}
+            </div>
+
+            <form onSubmit={handleSubmit} className="form-group">
+              <input
+                className="input"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <input
+                className="input"
+                placeholder="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+              <input
+                className="input"
+                placeholder="Age"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+              />
+
+              <button className="btn" type="submit">
+                {editingId ? "UPDATE" : "CREATE"}
+              </button>
+            </form>
+          </div>
+
+          {/* RIGHT */}
+          <div className="tile">
+            <div className="tile-pad">
+              <div className="section-title">POSTS</div>
+            </div>
+
+            {posts.map((post) => (
+              <div key={post._id} className="post-card">
+                <div className="post-name">{post.name}</div>
+                <div className="post-meta">{post.description}</div>
+                <div className="post-meta">Age: {post.age}</div>
+
+                <div className="action-row">
+                  <button
+                    className="small-btn"
+                    onClick={() => handleEdit(post)}
+                  >
+                    EDIT
+                  </button>
+                  <button
+                    className="small-btn"
+                    onClick={() => handleDelete(post._id)}
+                  >
+                    DELETE
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </StyledWrapper>
   );
 }

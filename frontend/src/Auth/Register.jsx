@@ -36,14 +36,11 @@ export function RegisterPage() {
 
   return (
     <StyledWrapper>
-      <div className="form-box">
-        <form className="form" onSubmit={handleSubmit}>
-          <span className="title">Sign up</span>
-          <span className="subtitle">
-            Create a free account with your email.
-          </span>
+        <div className="tile tile-pad auth-box">
+          <div className="auth-title">CREATE ACCOUNT</div>
+          <div className="auth-sub">Register to unlock dashboard</div>
 
-          <div className="form-container">
+          <form onSubmit={handleSubmit} className="form-group">
             <input
               type="text"
               className="input"
@@ -71,14 +68,13 @@ export function RegisterPage() {
               minLength={8}
               required
             />
-          </div>
-        
-          <button type="submit" className="button">
+
+          <button type="submit" className="btn">
             Sign up
           </button>
         </form>
 
-        <div className="form-section">
+        <div className="auth-footer">
           <p>
             Have an account? <a href="/login">Log in</a>
           </p>

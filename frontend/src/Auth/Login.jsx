@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { StyledWrapper } from "../components/StyledWrapper.jsx";
 import { loginUser } from "../api/userApi.js";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx"; // to get the user state from AuthContext
 
 export function loginPage() {
@@ -14,7 +14,7 @@ export function loginPage() {
   async function handleLogin(ev) {
     ev.preventDefault();
 
-     try {
+    try {
       const response = await loginUser(email, password);
 
       login(response.data.user);
@@ -26,39 +26,33 @@ export function loginPage() {
 
   return (
     <StyledWrapper>
-      <div className="form-box">
-        <form className="form" onSubmit={handleLogin}>
-          <span className="title">Welcome!</span>
-          <span className="subtitle">Sign in to your account.</span>
+      <div className="tile tile-pad auth-box">
+        <div className="auth-title">SYSTEM LOGIN</div>
+        <div className="auth-sub">Enter credentials to continue</div>
 
-          <div className="form-container">
-            <input
-              type="email"
-              className="input"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+        <form onSubmit={handleLogin} className="form-group">
+          <input
+            type="email"
+            placeholder="Email"
+            className="input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-            <input
-              type="password"
-              className="input"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              minLength={8}
-              required
-            />
-          </div>
-
-          <button type="submit">Sign in</button>
+          <button type="submit" className="btn">
+            SIGN IN
+          </button>
         </form>
 
-        <div className="form-section">
-          <p>
-            Don't have an account? <a href="/register">Sign up</a>
-          </p>
+        <div className="auth-footer">
+          Don't have an account? <a href="/register">Create account</a>
         </div>
       </div>
     </StyledWrapper>
