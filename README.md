@@ -36,53 +36,53 @@ This project was created as a learning exercise to understand how frontend and b
 ---
 ## 📁 Project Structure (Backend)
 
-backend/
-└─ src/
-   ├─ config/
-   │  ├─ constants.js
-   │  └─ database.js
-   │
-   ├─ controllers/
-   │  ├─ user.controller.js
-   │  └─ post.controller.js
-   │
-   ├─ models/
-   │  ├─ user.model.js
-   │  └─ post.model.js
-   │
-   ├─ routes/
-   │  ├─ user.route.js
-   │  └─ post.route.js
-   │
-   └─ index.js
+## backend/
+## └─ src/
+## ├─ config/
+## │  ├─ constants.js
+## │  └─ database.js
+## │
+## ├─ controllers/
+## │  ├─ user.controller.js
+## │  └─ post.controller.js
+## │
+## ├─ models/
+## │  ├─ user.model.js
+## │  └─ post.model.js
+## │
+## ├─ routes/
+## │  ├─ user.route.js
+## │  └─ post.route.js
+## │
+## └─ index.js
 
 --- 
 
 ## 📁 Project Structure (Frontend)
 
-frontend/
-└─ src/
-   ├─ api/                  # Axios API calls
-   │  ├─ postApi.js
-   │  └─ userApi.js
-   │
-   ├─ Auth/                 # Authentication pages
-   │  ├─ Login.jsx
-   │  └─ Register.jsx
-   │
-   ├─ components/           # Reusable components
-   │  ├─ Navbar.jsx
-   │  ├─ ProtectedRoute.jsx
-   │  └─ StyledWrapper.jsx
-   │
-   ├─ context/              # Global state (Auth)
-   │  └─ AuthContext.jsx
-   │
-   ├─ pages/                # Main pages
-   │  └─ Dashboard.jsx
-   │
-   ├─ App.jsx
-   └─ main.jsx
+## frontend/
+## └─ src/
+## ├─ api/                   # Axios API calls
+## │  ├─ postApi.js
+## │  └─ userApi.js
+## │
+## ├─ Auth/                  # Authentication pages
+## │  ├─ Login.jsx
+## │  └─ Register.jsx
+## │
+## ├─ components/            # Reusable components
+## │  ├─ Navbar.jsx
+## │  ├─ ProtectedRoute.jsx
+## │  └─ StyledWrapper.jsx
+## │
+## ├─ context/                # Global state (Auth)
+## │  └─ AuthContext.jsx
+## │
+## ├─ pages/                   # Main pages
+## │  └─ Dashboard.jsx
+## │
+## ├─ App.jsx
+## └─ main.jsx
 
 ---
 
@@ -116,10 +116,10 @@ LogIn
 ![alt text](image-1.png)
 
 Register
-![alt text](image-3.png)
+![alt text](image.png)
 
 DashBoard
-![alt text](image.png)
+![alt text](image-2.png)
 
 
 Author: Lester Laroya

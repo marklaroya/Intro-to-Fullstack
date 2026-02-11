@@ -27,8 +27,8 @@ export function loginPage() {
   return (
     <StyledWrapper>
       <div className="tile tile-pad auth-box">
-        <div className="auth-title">SYSTEM LOGIN</div>
-        <div className="auth-sub">Enter credentials to continue</div>
+        <div className="auth-title">WELCOME!</div>
+        <div className="auth-sub">Enter your account to continue</div>
 
         <form onSubmit={handleLogin} className="form-group">
           <input
